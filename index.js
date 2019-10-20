@@ -4,6 +4,8 @@ const RPDU = require('./lib/rpdu')
 const TPDU = require('./lib/tpdu')
 const { UD } = require('./lib/ud')
 const { UDH } = require('./lib/udh')
+const alphabets = require('./lib/alphabets')
+const tplib = require('./lib/tplib')
 
 function ack (message) {
   const rpdu = RPDU.ACK.from({
@@ -35,7 +37,7 @@ function submit (message) {
     dcs: message.dcs,
     coding: message.coding,
     udh: message.udh,
-    data: message.content
+    content: message.content
   })
   // debug(tpdu)
 
@@ -43,7 +45,7 @@ function submit (message) {
     reference,
     source: message.source,
     destination: message.smsc,
-    data: tpdu.encode()
+    content: tpdu.encode()
   })
   // debug(rpdu)
 
@@ -72,7 +74,7 @@ function deliver (message) {
   const rpdu = RPDU.DATA.from({
     reference,
     source: message.smsc,
-    data: tpBuffer
+    content: tpBuffer
   }, true)
 
   debug(rpdu)
@@ -102,7 +104,7 @@ function command (message) {
     destination: message.destination,
     command: message.command,
     message_number: message.message_number,
-    data: message.content
+    content: message.content
   })
   debug(tpdu)
   const tpBuffer = tpdu.encode()
@@ -111,7 +113,7 @@ function command (message) {
   const rpdu = RPDU.DATA.from({
     reference,
     destination: message.smsc,
-    data: tpdu.encode()
+    content: tpdu.encode()
   })
 
   debug(rpdu)
@@ -126,7 +128,7 @@ function decode (buffer) {
 
   const message = rpMessage
 
-  if (rpMessage.data) {
+  if (rpMessage.content) {
     const tpMessage = TPDU.decode(rpMessage)
 
     message.tpdu = tpMessage
@@ -135,4 +137,4 @@ function decode (buffer) {
   return message
 }
 
-module.exports = { decode, command, smma, deliver, submit, error, ack, TPDU, UD, UDH }
+module.exports = { decode, command, smma, deliver, submit, error, ack, TPDU, UD, UDH, alphabets, tplib }

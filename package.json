@@ -1,6 +1,6 @@
 {
   "name": "sms-3gpp",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "3GPP SMS TPDU and RPDU library",
   "main": "index.js",
   "scripts": {
@@ -10,6 +10,7 @@
     "name": "Vladimir Latyshev",
     "email": "latysheff@gmail.com"
   },
+  "repository": "https://github.com/latysheff/sms-3gpp.git",
   "license": "MIT",
   "dependencies": {
     "debug": "^4.1.1"
