@@ -1,6 +1,6 @@
 {
   "name": "sms-3gpp",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "3GPP SMS TPDU and RPDU library",
   "main": "index.js",
   "scripts": {
