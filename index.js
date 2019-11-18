@@ -6,6 +6,7 @@ const { UD } = require('./lib/ud')
 const { UDH } = require('./lib/udh')
 const alphabets = require('./lib/alphabets')
 const tplib = require('./lib/tplib')
+const rplib = require('./lib/rplib')
 
 function ack (message) {
   const rpdu = RPDU.ACK.from({
@@ -137,4 +138,4 @@ function decode (buffer) {
   return message
 }
 
-module.exports = { decode, command, smma, deliver, submit, error, ack, TPDU, UD, UDH, alphabets, tplib }
+module.exports = { decode, command, smma, deliver, submit, error, ack, TPDU, UD, UDH, alphabets, tplib, rplib }
