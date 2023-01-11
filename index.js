@@ -10,7 +10,8 @@ const rplib = require('./lib/rplib')
 
 function ack (message) {
   const rpdu = RPDU.ACK.from({
-    reference: message.reference
+    reference: message.reference,
+    content: message.content
   })
 
   return rpdu.encode()
@@ -19,19 +20,20 @@ function ack (message) {
 function error (message) {
   const rpdu = RPDU.ERROR.from({
     reference: message.reference,
-    errorCode: message.errorCode
+    errorCode: message.errorCode,
+    content: message.content
   })
-  debug(rpdu)
 
   return rpdu.encode()
 }
 
 function submit (message) {
-  const reference = message.reference || Math.floor(Math.random() * 0xff)
-
   // todo pass message as a buffer, if have from smpp
+
+  const reference = message.reference ?? Math.floor(Math.random() * 256)
+
   const tpdu = TPDU.SUBMIT.from({
-    reference: reference,
+    reference,
     destination: message.destination,
     report: message.report,
     pid: message.pid,
@@ -40,7 +42,6 @@ function submit (message) {
     udh: message.udh,
     content: message.content
   })
-  // debug(tpdu)
 
   const rpdu = RPDU.DATA.from({
     reference,
@@ -48,10 +49,8 @@ function submit (message) {
     destination: message.smsc,
     content: tpdu.encode()
   })
-  // debug(rpdu)
 
   const buffer = rpdu.encode()
-  // debug(buffer)
 
   return buffer
 }

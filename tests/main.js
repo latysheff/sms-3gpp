@@ -45,3 +45,60 @@ tape('ERROR encode', (t) => {
 
   t.end()
 })
+
+tape('SMS Type 0 SUBMIT decode', (t) => {
+  const hex = '00000007919761989901f00d21000b919761000000f0400000'
+  const buffer = Buffer.from(hex, 'hex')
+  const message = sms.decode(buffer)
+
+  console.log(message.content.toString('hex'))
+  delete message.content
+
+  t.same(message, {
+    type: 'data',
+    reference: 0,
+    source: undefined,
+    destination: { ton: 1, npi: 1, number: '79168999100' },
+    network: false,
+    tpdu: {
+      type: 'SUBMIT',
+      reference: 0,
+      destination: { ton: 1, npi: 1, number: '79160000000', length: 8 },
+      report: false,
+      dcs: 0,
+      pid: 64,
+      coding: 'default',
+      content: ''
+    }
+  })
+
+  t.end()
+})
+
+tape('SMS Type 0 DELIVER decode', (t) => {
+  const hex = '012007919781340310f100102406d04dea1040002221921092112100'
+  const buffer = Buffer.from(hex, 'hex')
+  const message = sms.decode(buffer)
+
+  delete message.content
+
+  t.same(message, {
+    type: 'data',
+    reference: 32,
+    source: { ton: 1, npi: 1, number: '79184330011' },
+    destination: undefined,
+    network: true,
+    tpdu: {
+      type: 'DELIVER',
+      timestamp: new Date('Thu Dec 29 2022 01:29:11 GMT+0300 (Moscow Standard Time)'),
+      source: { ton: 5, npi: 0, number: 'MTC', length: 3 },
+      report: true,
+      dcs: 0,
+      pid: 64,
+      coding: 'default',
+      content: ''
+    }
+  })
+
+  t.end()
+})

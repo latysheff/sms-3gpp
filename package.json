@@ -1,10 +1,10 @@
 {
   "name": "sms-3gpp",
-  "version": "0.0.6",
+  "version": "0.0.7",
   "description": "3GPP SMS TPDU and RPDU library",
   "main": "index.js",
   "scripts": {
-    "test": "tape tests/*"
+    "test": "standard && tape tests/*"
   },
   "author": {
     "name": "Vladimir Latyshev",
