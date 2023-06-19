@@ -137,4 +137,19 @@ function decode (buffer) {
   return message
 }
 
-module.exports = { decode, command, smma, deliver, submit, error, ack, TPDU, UD, UDH, alphabets, tplib, rplib }
+module.exports = {
+  decode,
+  command,
+  smma,
+  deliver,
+  submit,
+  error,
+  ack,
+  RPDU,
+  TPDU,
+  UD,
+  UDH,
+  alphabets,
+  tplib,
+  rplib
+}
